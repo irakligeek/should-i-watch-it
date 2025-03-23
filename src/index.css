@@ -1,0 +1,16 @@
+:root {
+  --light-blue-500: #3b82f6;
+  --light-blue-600: #2563eb;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+

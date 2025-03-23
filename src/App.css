@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+.app-container {
+  min-height: 100vh;
+  background-color: #f3f4f6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 5rem;
+}
+
+.app-title {
+  font-size: 2.25rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 2rem;
+}
+
+.search-container {
+  width: 100%;
+  max-width: 28rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  margin-bottom: 1rem;
+}
+
+.search-input:focus {
+  outline: none;
+  ring: 2px solid var(--light-blue-500);
+}
+
+.search-button {
+  width: 100%;
+  background-color: var(--light-blue-500);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: var(--light-blue-600);
+}
+
+
+select {
+  padding-right: 2rem;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6' fill='%23000'><path d='M0 0l5 5 5-5z'/></svg>")
+  no-repeat right 0.5rem center;
+  background-size: 0.75rem;
+}
+
