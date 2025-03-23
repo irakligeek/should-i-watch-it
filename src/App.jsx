@@ -15,14 +15,26 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [watchlistLoading, setWatchlistLoading] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-  const [userWatchlist, setUserWatchlist] = useState(false);
+  const [userWatchlist, setUserWatchlist] = useState([]);
 
-  // useEffect(() => {
-  //   if (window.location.search.includes("code=")) {
-  //     const newUrl = window.location.origin + window.location.pathname;
-  //     window.history.replaceState({}, document.title, newUrl);
-  //   }
-  // }, []);
+  // Clean up URL after successful authentication
+  useEffect(() => {
+    // Check if URL contains code and state parameters
+    const url = new URL(window.location.href);
+    if (url.searchParams.has("code") && url.searchParams.has("state")) {
+      // Wait a bit to ensure auth processing is complete
+      const timer = setTimeout(() => {
+        // Remove the query parameters and replace the URL without reloading the page
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.pathname
+        );
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   // Get user watchlist on
   useEffect(() => {
@@ -95,7 +107,6 @@ function App() {
 
       // Parse the JSON response
       const data = await response.json();
-      console.log("Fetched movies and TV shows:", data);
 
       // You can now update your UI based on the response, for example:
       setMovies(data.movies || []);
@@ -155,8 +166,7 @@ function App() {
         console.error("Error adding movie to watchlist:", data);
         alert("Something went wrong...");
       } else {
-        console.log("Movie added to watchlist:", data);
-        //... Update the watchlist in the UI
+        //Update the watchlist in the UI
         setUserWatchlist((prevWatchlist) => [...prevWatchlist, movie]);
       }
     } catch (error) {
@@ -209,7 +219,7 @@ function App() {
   const handleSignOut = () => {
     auth.removeUser();
     const clientId = awsCognito.client_id;
-    const logoutUri =  import.meta.env.VITE_LOGOUT_URI;
+    const logoutUri = import.meta.env.VITE_LOGOUT_URI;
     const cognitoDomain =
       "https://us-east-1vevbdzdmq.auth.us-east-1.amazoncognito.com";
     window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(
@@ -256,8 +266,6 @@ function App() {
       console.error("Error deleting movie:", error);
     }
   };
-
-  console.log("is authenticated", auth.isAuthenticated);
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center px-4 ">
